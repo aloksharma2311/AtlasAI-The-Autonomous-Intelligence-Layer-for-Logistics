@@ -1,0 +1,68 @@
+{
+  "warehouses": [
+    {
+      "id": "WH_MUM",
+      "name": "Mumbai",
+      "throughput_pct": 82,
+      "is_congested": true
+    },
+    {
+      "id": "WH_DEL",
+      "name": "Delhi",
+      "throughput_pct": 61,
+      "is_congested": false
+    },
+    {
+      "id": "WH_PUN",
+      "name": "Pune",
+      "throughput_pct": 54,
+      "is_congested": false
+    },
+    {
+      "id": "WH_BLR",
+      "name": "Bangalore",
+      "throughput_pct": 74,
+      "is_congested": false
+    }
+  ],
+  "shipments": [
+    {
+      "id": "SHP_1001",
+      "origin_id": "WH_MUM",
+      "destination_id": "WH_DEL",
+      "carrier_id": "CAR_01",
+      "priority": "high",
+      "status": "in_transit",
+      "promised_eta": "2026-03-09T14:00:00Z",
+      "current_eta": "2026-03-09T18:00:00Z"
+    },
+    {
+      "id": "SHP_1002",
+      "origin_id": "WH_PUN",
+      "destination_id": "WH_BLR",
+      "carrier_id": "CAR_02",
+      "priority": "medium",
+      "status": "in_transit",
+      "promised_eta": "2026-03-09T11:30:00Z",
+      "current_eta": "2026-03-09T11:50:00Z"
+    }
+  ],
+  "carriers": [
+    {
+      "id": "CAR_01",
+      "name": "BlueFreight",
+      "success_rate_pct": 93,
+      "avg_delay_mins": 44,
+      "cost_multiplier": 1.2,
+      "tier": "gold"
+    },
+    {
+      "id": "CAR_02",
+      "name": "SwiftHaul",
+      "success_rate_pct": 89,
+      "avg_delay_mins": 31,
+      "cost_multiplier": 1.1,
+      "tier": "silver"
+    }
+  ]
+}

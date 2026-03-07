@@ -1,0 +1,10 @@
+[
+  {
+    "audit_id": "AUD_9001",
+    "decision": {
+      "target_shipment_id": "SHP_1001",
+      "carrier_id": "CAR_01",
+      "action_type": "reroute"
+    }
+  }
+]
