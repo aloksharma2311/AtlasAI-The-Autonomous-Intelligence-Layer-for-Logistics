@@ -5,7 +5,6 @@ import Card from "@/components/ui/Card"
 import SectionHeader from "@/components/ui/SectionHeader"
 import EmptyState from "@/components/ui/EmptyState"
 import { useStore } from "@/store/useStore"
-import { formatTimestamp } from "@/lib/format"
 
 function getToneClasses(type: "alert" | "approval" | "action" | "system") {
   switch (type) {
@@ -85,9 +84,7 @@ export default function SafetyLedger() {
                     <p className="text-sm font-semibold leading-6 text-slate-900">
                       {entry.message}
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">
-                      {formatTimestamp(entry.timestamp)}
-                    </p>
+                    <p className="mt-1 text-xs text-slate-500">{entry.timestamp}</p>
                   </div>
                 </div>
 

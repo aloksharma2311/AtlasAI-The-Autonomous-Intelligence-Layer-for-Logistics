@@ -12,8 +12,6 @@ import LoadingState from "@/components/ui/LoadingState"
 import { useSocket } from "@/hooks/useSocket"
 import { fetchInitialState } from "@/lib/api"
 import ShipmentSummaryPanel from "@/components/dashboard/ShipmentSummaryPanel"
-import SystemStatusBanner from "@/components/dashboard/SystemStatusBanner"
-import DashboardInfoStrip from "@/components/dashboard/DashboardInfoStrip"
 import { useStore } from "@/store/useStore"
 import {
   getActiveCarriersCount,
@@ -69,7 +67,6 @@ export default function DashboardPage() {
   return (
     <div>
       <Topbar title="Dashboard" />
-      <SystemStatusBanner />
 
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-4">
         <KpiCard
@@ -110,8 +107,6 @@ export default function DashboardPage() {
         <SafetyLedger />
         <ShipmentSummaryPanel />
       </div>
-
-      <DashboardInfoStrip />
     </div>
   )
 }
