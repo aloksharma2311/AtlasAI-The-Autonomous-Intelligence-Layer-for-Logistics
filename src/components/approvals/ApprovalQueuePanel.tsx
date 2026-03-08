@@ -20,8 +20,8 @@ function getDecisionText(decision: Record<string, unknown>) {
       : "Unknown"
 
   const carrierId =
-    typeof decision.carrier_id === "string"
-      ? decision.carrier_id
+    typeof decision.new_carrier_id === "string"
+      ? decision.new_carrier_id
       : "Unknown"
 
   const estimatedCost =
@@ -29,11 +29,29 @@ function getDecisionText(decision: Record<string, unknown>) {
       ? `$${decision.estimated_cost.toFixed(2)}`
       : "N/A"
 
+  const confidence =
+    typeof decision.confidence === "number"
+      ? `${(decision.confidence * 100).toFixed(1)}%`
+      : "N/A"
+
+  const reasoning =
+    Array.isArray(decision.reasoning)
+      ? (decision.reasoning as string[])
+      : []
+
+  const costBreakdown =
+    typeof decision.cost_breakdown === "object" && decision.cost_breakdown !== null
+      ? (decision.cost_breakdown as Record<string, number>)
+      : null
+
   return {
     actionType,
     shipmentId,
     carrierId,
     estimatedCost,
+    confidence,
+    reasoning,
+    costBreakdown,
   }
 }
 
@@ -98,8 +116,15 @@ export default function ApprovalQueuePanel() {
                 ? (item.decision as Record<string, unknown>)
                 : {}
 
-            const { actionType, shipmentId, carrierId, estimatedCost } =
-              getDecisionText(decision)
+            const {
+              actionType,
+              shipmentId,
+              carrierId,
+              estimatedCost,
+              confidence,
+              reasoning,
+              costBreakdown,
+            } = getDecisionText(decision)
 
             return (
               <div
@@ -121,7 +146,7 @@ export default function ApprovalQueuePanel() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-4">
                     <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-100">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
                         Shipment
@@ -148,8 +173,55 @@ export default function ApprovalQueuePanel() {
                         {estimatedCost}
                       </p>
                     </div>
+
+                    <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-100">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                        Confidence
+                      </p>
+                      <p className="mt-2 text-sm font-semibold text-indigo-600">
+                        {confidence}
+                      </p>
+                    </div>
                   </div>
                 </div>
+
+                {reasoning.length > 0 && (
+                  <div className="mt-4 rounded-xl bg-slate-50 p-4">
+                    <p className="text-xs font-semibold uppercase text-slate-400">
+                      AI Reasoning
+                    </p>
+
+                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600">
+                      {reasoning.map((r, index) => (
+                        <li key={index}>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {costBreakdown && (
+                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-xl bg-white p-3 ring-1 ring-slate-100">
+                      <p className="text-xs text-slate-400">Reroute Cost</p>
+                      <p className="font-semibold">${costBreakdown.reroute_cost}</p>
+                    </div>
+
+                    <div className="rounded-xl bg-white p-3 ring-1 ring-slate-100">
+                      <p className="text-xs text-slate-400">Delay Penalty</p>
+                      <p className="font-semibold">${costBreakdown.delay_penalty}</p>
+                    </div>
+
+                    <div className="rounded-xl bg-white p-3 ring-1 ring-slate-100">
+                      <p className="text-xs text-slate-400">SLA Risk</p>
+                      <p className="font-semibold">${costBreakdown.sla_risk}</p>
+                    </div>
+
+                    <div className="rounded-xl bg-white p-3 ring-1 ring-slate-100">
+                      <p className="text-xs text-slate-400">Total Cost</p>
+                      <p className="font-semibold">${costBreakdown.total}</p>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-5 flex flex-wrap gap-3">
                   <button

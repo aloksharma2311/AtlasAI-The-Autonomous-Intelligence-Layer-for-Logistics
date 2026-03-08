@@ -1,9 +1,9 @@
-import type { Warehouse } from "@/types/contract"
+import type { Warehouse } from "@/types/contract";
 
 type WarehouseNodeProps = {
-  warehouse: Warehouse
-  isAlerted?: boolean
-}
+  warehouse: Warehouse;
+  isAlerted?: boolean;
+};
 
 export default function WarehouseNode({
   warehouse,
@@ -52,6 +52,20 @@ export default function WarehouseNode({
         </div>
       </div>
 
+      <div className="mt-3">
+        <div className="mb-1 flex items-center justify-between text-[11px] font-medium text-slate-500">
+          <span>Inventory</span>
+          <span>{warehouse.inventory_level_pct}%</span>
+        </div>
+
+        <div className="h-2 rounded-full bg-slate-100">
+          <div
+            className="h-2 rounded-full bg-indigo-500"
+            style={{ width: `${Math.max(6, warehouse.inventory_level_pct)}%` }}
+          />
+        </div>
+      </div>
+
       <div className="mt-3 flex items-center justify-between">
         <span
           className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ${
@@ -70,5 +84,5 @@ export default function WarehouseNode({
         ) : null}
       </div>
     </div>
-  )
+  );
 }

@@ -3,6 +3,7 @@ export type Warehouse = {
   name: string
   throughput_pct: number
   is_congested: boolean
+  inventory_level_pct: number // NEW
 }
 
 export type Carrier = {
@@ -12,6 +13,8 @@ export type Carrier = {
   avg_delay_mins: number
   cost_multiplier: number
   tier: string
+  reliability_score: number // NEW
+  vehicle_capacity_pct: number // NEW
 }
 
 export type Shipment = {
@@ -23,6 +26,12 @@ export type Shipment = {
   status: string
   promised_eta: string
   current_eta: string
+
+  risk_score: number // NEW
+  predicted_delay: number // NEW
+  weather_signal: string // NEW
+  traffic_delay_mins: number // NEW
+  pickup_delay_mins: number // NEW
 }
 
 export type SyncStateResponse = {
@@ -31,8 +40,22 @@ export type SyncStateResponse = {
   carriers: Carrier[]
 }
 
+export type CostBreakdown = {
+  reroute_cost: number
+  delay_penalty: number
+  sla_risk: number
+  total: number
+}
+
 export type AgentDecision = {
-  [key: string]: unknown
+  reasoning: string[]
+  action_type: string
+  target_shipment_id: string
+  new_carrier_id: string
+  cost_breakdown: CostBreakdown
+  estimated_cost: number
+  confidence: number
+  requires_approval: boolean
 }
 
 export type ApprovalRequiredPayload = {
