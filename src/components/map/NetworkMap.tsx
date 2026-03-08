@@ -28,8 +28,8 @@ import { useStore } from "@/store/useStore"
 import WarehouseNode from "@/components/map/WarehouseNode"
 import type { Shipment, Warehouse as WarehouseType } from "@/types/contract"
 
-const NODE_WIDTH = 210
-const NODE_HEIGHT = 130
+const NODE_WIDTH = 240
+const NODE_HEIGHT = 210
 const MAX_VISIBLE_EDGES = 35
 
 function getShipmentPriorityScore(shipment: Shipment) {
@@ -91,10 +91,10 @@ function applyDagreLayout(nodes: Node[], edges: Edge[]) {
   graph.setDefaultEdgeLabel(() => ({}))
   graph.setGraph({
     rankdir: "LR",
-    nodesep: 44,
-    ranksep: 100,
-    marginx: 30,
-    marginy: 30,
+    nodesep: 90,
+    ranksep: 170,
+    marginx: 50,
+    marginy: 50,
   })
 
   nodes.forEach((node) => {
@@ -153,7 +153,7 @@ function MapControls({
       </button>
 
       <button
-        onClick={() => fitView({ padding: 0.16 })}
+        onClick={() => fitView({ padding: 0.24 })}
         className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50"
         title="Fit view"
       >
@@ -276,7 +276,7 @@ function NetworkMapInner() {
       <div
         ref={containerRef}
         className={`relative overflow-hidden rounded-[26px] border border-slate-100 bg-[linear-gradient(180deg,#f8fbff_0%,#f8fafc_100%)] ${
-          isFullscreen ? "h-screen" : "h-[580px]"
+          isFullscreen ? "h-screen" : "h-[620px]"
         }`}
       >
         <div className="absolute inset-x-0 top-0 z-[5] h-16 bg-gradient-to-b from-white/70 to-transparent" />
@@ -290,8 +290,8 @@ function NetworkMapInner() {
           nodes={nodes}
           edges={edges}
           fitView
-          fitViewOptions={{ padding: 0.16 }}
-          minZoom={0.25}
+          fitViewOptions={{ padding: 0.24 }}
+          minZoom={0.2}
           maxZoom={1.4}
           proOptions={{ hideAttribution: true }}
         >
