@@ -5,6 +5,7 @@ import dagre from "dagre"
 import ReactFlow, {
   Background,
   MarkerType,
+  Position,
   ReactFlowProvider,
   useReactFlow,
   type Edge,
@@ -80,8 +81,8 @@ function buildLayoutNodes(
     position: { x: 0, y: 0 },
     draggable: false,
     selectable: true,
-    sourcePosition: "right" as const,
-    targetPosition: "left" as const,
+    sourcePosition: Position.Right,
+    targetPosition: Position.Left,
   }))
 }
 
